@@ -17,7 +17,7 @@ app.use(cors({
   methods: ['GET', 'POST', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
-app.use(express.json());
+app.use(express.json()); 
 
 // NOTE: Do NOT serve static files here for Netlify Functions.
 // Netlify will serve /public directly as your site.
