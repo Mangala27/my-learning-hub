@@ -1,0 +1,9 @@
+[build]
+  publish = "public"        # your static site folder
+  functions = "netlify/functions"
+
+# Map /config.js to the function above
+[[redirects]]
+  from = "/config.js"
+  to = "/.netlify/functions/config"
+  status = 200

@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Ultimate Learning Hub</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="antialiased text-gray-800 palette-1">
+    <div class="max-w-4xl w-full bg-white shadow-xl rounded-2xl p-6 sm:p-10">
+        <h1
+            class="text-3xl sm:text-4xl lg:text-5xl font-bold text-center mb-4 text-[var(--primary-color)] leading-tight">
+            The Ultimate Learning Hub
+        </h1>
+        <p class="text-center text-gray-600 mb-8 sm:mb-12">
+            Create a factual lesson and test your knowledge with a quiz!
+        </p>
+        <!-- Tab Navigation -->
+        <div class="flex border-b border-gray-200 overflow-x-auto">
+            <button id="tab-generate"
+                class="py-2 px-4 text-sm font-medium focus:outline-none border-b-2 border-indigo-500 text-indigo-600 whitespace-nowrap active-tab">Generate
+                Lesson</button>
+            <button id="tab-lesson"
+                class="py-2 px-4 text-sm font-medium focus:outline-none border-b-2 border-transparent hover:border-gray-300 text-gray-500 whitespace-nowrap"
+                disabled>View Lesson</button>
+            <button id="tab-quiz"
+                class="py-2 px-4 text-sm font-medium focus:outline-none border-b-2 border-transparent hover:border-gray-300 text-gray-500 whitespace-nowrap"
+                disabled>Take Quiz</button>
+        </div>
+        <!-- Tab Content Container -->
+        <div id="tab-content-container" class="mt-4">
+            <!-- Generate Lesson Tab -->
+            <div id="content-generate" class="tab-content active">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+                    <div class="col-span-1 sm:col-span-2 lg:col-span-3">
+                        <label for="prompt-input" class="block text-sm font-medium text-gray-700">Topic Name:</label>
+                        <input type="text" id="prompt-input"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2"
+                            placeholder="e.g., The solar system">
+                    </div>
+                    <div>
+                        <label for="topic-select" class="block text-sm font-medium text-gray-700">Topic:</label>
+                        <select id="topic-select"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2">
+                            <option value="Science">Science</option>
+                            <option value="History">History</option>
+                            <option value="Math">Math</option>
+                            <option value="Art">Art</option>
+                            <option value="Language Arts">Language Arts</option>
+                            <option value="Geography">Geography</option>
+                            <option value="Technology">Technology</option>
+                            <option value="Music">Music</option>
+                            <option value="Physical Education">Physical Education</option>
+                            <option value="Social Studies">Social Studies</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="style-select" class="block text-sm font-medium text-gray-700">Style of
+                            Explanation:</label>
+                        <select id="style-select"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2">
+                            <option value="Beginner">Beginner</option>
+                            <option value="Intermediate">Intermediate</option>
+                            <option value="Advanced">Advanced</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="chapters-select" class="block text-sm font-medium text-gray-700">Number of
+                            Chapters:</label>
+                        <select id="chapters-select"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="age-select" class="block text-sm font-medium text-gray-700">Age Group:</label>
+                        <select id="age-select"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2">
+                            <option value="3-5">3-5 years old</option>
+                            <option value="6-10">6-10 years old</option>
+                            <option value="10-13">10-13 years old</option>
+                            <option value="14-16">14-16 years old</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="voice-select" class="block text-sm font-medium text-gray-700">Voice
+                            Language:</label>
+                        <select id="voice-select"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2">
+                            <option value="en-US">English (US)</option>
+                            <option value="es-US">Spanish (US)</option>
+                            <option value="fr-FR">French (FR)</option>
+                            <option value="hi-IN">Hindi (IN)</option>
+                            <option value="mr-IN">Marathi (IN)</option>
+                            <option value="gu-IN">Gujarati (IN)</option>
+                            <option value="ta-IN">Tamil (IN)</option>
+                            <option value="pa-IN">Punjabi (IN)</option>
+                        </select>
+                    </div>
+                    <!-- Color Palette Settings -->
+                    <div class="col-span-1 sm:col-span-2 lg:col-span-3 flex justify-center mt-4">
+                        <label for="color-palette-select" class="block text-sm font-medium text-gray-700">Color
+                            Palette:</label>
+                        <select id="color-palette-select"
+                            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 ml-2">
+                            <option value="1">Palette 1 (Purple/Pink)</option>
+                            <option value="2">Palette 2 (Green/Blue)</option>
+                            <option value="3">Palette 3 (Orange/Red)</option>
+                            <option value="4">Palette 4 (Light Blue/Purple)</option>
+                            <option value="5">Palette 5 (Yellow/Orange)</option>
+                            <option value="6">Palette 6 (Pink/Magenta)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="flex justify-center mt-6">
+                    <button id="generate-button"
+                        class="bg-indigo-600 text-white font-bold py-2 px-6 rounded-full shadow-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-colors duration-200 ease-in-out transform hover:scale-105">
+                        Generate Lesson
+                    </button>
+                </div>
+                <div class="loading-indicator" id="lesson-loading-indicator">Generating lesson...</div>
+            </div>
+            <!-- View Lesson Tab -->
+            <div id="content-lesson" class="tab-content">
+                <div id="lesson-display"
+                    class="text-base sm:text-lg text-gray-700 leading-relaxed space-y-6 bg-gray-100 p-6 rounded-lg shadow-inner mt-4">
+                    <h2
+                        class="text-2xl sm:text-3xl font-bold text-center mb-4 text-[var(--primary-color)] leading-tight">
+                        Your Generated Lesson:</h2>
+                    <div id="generated-lesson-content"></div>
+                </div>
+                <div class="flex justify-center mt-6 space-x-4">
+                    <button id="audio-button"
+                        class="bg-gray-600 text-white font-bold py-2 px-6 rounded-full shadow-lg hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors duration-200 ease-in-out transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed">
+                        Listen to Lesson
+                    </button>
+                    <button id="download-button"
+                        class="bg-teal-600 text-white font-bold py-2 px-6 rounded-full shadow-lg hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 transition-colors duration-200 ease-in-out transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed">
+                        Download
+                    </button>
+                </div>
+                <!-- New Translation UI -->
+                <div class="mt-6 flex justify-center items-center space-x-4">
+                    <button id="translate-button"
+                        class="bg-purple-600 text-white font-bold py-2 px-6 rounded-full shadow-lg hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 transition-colors duration-200 ease-in-out transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed">
+                        Translate Lesson
+                    </button>
+                    <select id="target-language-select"
+                        class="mt-1 block rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500 p-2">
+                        <option value="es">Spanish</option>
+                        <option value="fr">French</option>
+                        <option value="de">German</option>
+                        <option value="hi">Hindi</option>
+                        <option value="ar">Arabic</option>
+                        <option value="mr">Marathi</option>
+                    </select>
+                </div>
+                <div class="loading-indicator" id="translation-loading-indicator">Translating...</div>
+                <div id="translated-lesson-content"
+                    class="text-base sm:text-lg text-gray-700 leading-relaxed space-y-6 bg-gray-100 p-6 rounded-lg shadow-inner mt-4 hidden">
+                </div>
+                <div id="audio-player-container" class="hidden text-center mt-4">
+                    <audio id="audio-player" controls class="w-full"></audio>
+                    <div class="loading-indicator" id="audio-loading-indicator">Generating audio...</div>
+                </div>
+            </div>
+            <!-- Take Quiz Tab -->
+            <div id="content-quiz" class="tab-content">
+                <div id="quiz-section" class="mt-4 pt-6">
+                    <h3 class="text-2xl font-bold text-center text-[var(--primary-color)] mb-4">Quiz Time!</h3>
+                    <div id="quiz-questions-container"></div>
+                    <div class="flex justify-center mt-6">
+                        <button id="submit-quiz-button"
+                            class="bg-blue-600 text-white font-bold py-2 px-6 rounded-full shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200 ease-in-out transform hover:scale-105">
+                            Submit Answers
+                        </button>
+                    </div>
+                    <div id="quiz-results" class="hidden mt-4 text-center text-xl font-bold"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/config.js"></script>
+    <script>
+        const baseApiUrl = window.ENV.API_URL
+        // Helper function to convert base64 to ArrayBuffer for audio
+        function base64ToArrayBuffer(base64) {
+            const binary_string = window.atob(base64);
+            const len = binary_string.length;
+            const bytes = new Uint8Array(len);
+            for (let i = 0; i < len; i++) {
+                bytes[i] = binary_string.charCodeAt(i);
+            }
+            return bytes.buffer;
+        }
+        // Helper function to convert PCM audio data to WAV format
+        function pcmToWav(pcmData, sampleRate) {
+            const dataLength = pcmData.length * 2;
+            const buffer = new ArrayBuffer(44 + dataLength);
+            const view = new DataView(buffer);
+            let offset = 0;
+            function writeString(str) { for (let i = 0; i < str.length; i++) { view.setUint8(offset++, str.charCodeAt(i)); } }
+            function writeUint32(num) { view.setUint32(offset, num, true); offset += 4; }
+            function writeUint16(num) { view.setUint16(offset, num, true); offset += 2; }
+            writeString('RIFF');
+            writeUint32(36 + dataLength);
+            writeString('WAVE');
+            writeString('fmt ');
+            writeUint32(16);
+            writeUint16(1); // AudioFormat: 1 for PCM
+            writeUint16(1); // NumChannels: 1
+            writeUint32(sampleRate);
+            writeUint32(sampleRate * 2); // ByteRate
+            writeUint16(2); // BlockAlign
+            writeUint16(16); // BitsPerSample
+            writeString('data');
+            writeUint32(dataLength);
+            const pcmView = new Int16Array(buffer, 44);
+            for (let i = 0; i < pcmData.length; i++) { pcmView[i] = pcmData[i]; }
+            return new Blob([view], { type: 'audio/wav' });
+        }
+        // --- API Call with Exponential Backoff ---
+        async function fetchDataWithBackoff(url, options, retries = 3, delay = 1000) {
+            try {
+                const response = await fetch(url, options);
+                if (response.status === 429 && retries > 0) {
+                    console.warn(`429 Too Many Requests. Retrying in ${delay / 1000}s...`);
+                    await new Promise(res => setTimeout(res, delay));
+                    return fetchDataWithBackoff(url, options, retries - 1, delay * 2);
+                }
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
+                }
+                return response.json();
+            } catch (error) {
+                console.error('Fetch failed:', error);
+                throw error;
+            }
+        }
+        // --- Global State and DOM Elements ---
+        const promptInput = document.getElementById('prompt-input');
+        const topicSelect = document.getElementById('topic-select');
+        const styleSelect = document.getElementById('style-select');
+        const chaptersSelect = document.getElementById('chapters-select');
+        const ageSelect = document.getElementById('age-select');
+        const voiceSelect = document.getElementById('voice-select');
+        const colorPaletteSelect = document.getElementById('color-palette-select');
+        const generateButton = document.getElementById('generate-button');
+        const audioButton = document.getElementById('audio-button');
+        const downloadButton = document.getElementById('download-button');
+        const translateButton = document.getElementById('translate-button');
+        const targetLanguageSelect = document.getElementById('target-language-select');
+        const generatedLessonContent = document.getElementById('generated-lesson-content');
+        const translatedLessonContent = document.getElementById('translated-lesson-content');
+        const lessonLoadingIndicator = document.getElementById('lesson-loading-indicator');
+        const translationLoadingIndicator = document.getElementById('translation-loading-indicator');
+        const quizQuestionsContainer = document.getElementById('quiz-questions-container');
+        const submitQuizButton = document.getElementById('submit-quiz-button');
+        const quizResults = document.getElementById('quiz-results');
+        const audioLoadingIndicator = document.getElementById('audio-loading-indicator');
+        const audioPlayerContainer = document.getElementById('audio-player-container');
+        const audioPlayer = document.getElementById('audio-player');
+        const quizSection = document.getElementById('quiz-section');
+        let generatedLessonText = '';
+        let quizData = null;
+        let currentLessonTitle = '';
+        const voiceLanguageMap = {
+            'en-US': 'Kore',
+            'es-US': 'Puck',
+            'fr-FR': 'Autonoe',
+            'hi-IN': 'Algenib',
+            'mr-IN': 'Alnilam',
+            'gu-IN': 'Vindemiatrix',
+            'ta-IN': 'Despina',
+            'pa-IN': 'Algenib'
+        };
+        const tabs = {
+            'generate': document.getElementById('content-generate'),
+            'lesson': document.getElementById('content-lesson'),
+            'quiz': document.getElementById('content-quiz')
+        };
+        const tabButtons = {
+            'generate': document.getElementById('tab-generate'),
+            'lesson': document.getElementById('tab-lesson'),
+            'quiz': document.getElementById('tab-quiz')
+        };
+        const palettes = ['palette-1', 'palette-2', 'palette-3', 'palette-4', 'palette-5', 'palette-6'];
+        // --- UI and Formatting Functions ---
+        function switchTab(tabId) {
+            for (const id in tabs) {
+                tabs[id].classList.remove('active');
+                tabButtons[id].classList.remove('border-indigo-500', 'text-indigo-600');
+                tabButtons[id].classList.add('border-transparent', 'text-gray-500', 'hover:border-gray-300');
+            }
+            tabs[tabId].classList.add('active');
+            tabButtons[tabId].classList.add('border-indigo-500', 'text-indigo-600');
+            tabButtons[tabId].classList.remove('border-transparent', 'text-gray-500', 'hover:border-gray-300');
+        }
+        function updateColorPalette(paletteId) {
+            document.body.className = `antialiased text-gray-800 ${palettes[paletteId - 1]}`;
+        }
+        colorPaletteSelect.addEventListener('change', (e) => {
+            const selectedPaletteId = e.target.value;
+            updateColorPalette(selectedPaletteId);
+        });
+
+
+        function formatLessonContent(rawText) {
+            const [lessonPart, quizPart] = rawText.split('---');
+
+            let formattedLesson = lessonPart.split('\n').map(line => {
+                if (line.trim().startsWith('Chapter')) {
+                    return `<h3 class="font-bold text-xl sm:text-2xl mt-6 mb-2 text-[var(--primary-color)]">${line}</h3>`;
+                } else if (line.trim() !== '') {
+                    let formattedLine = line.trim();
+                    const style = styleSelect.value;
+                    const emojis = ['🎈', '🎨', '🌟', '🌈', '🖍️', '☀️', '🚀', '🍎', '🐱', '🦋'];
+
+                    if (style === 'Beginner') {
+                        formattedLine = formattedLine.replace(/[.!?]/g, (match) => `${match} ${emojis[Math.floor(Math.random() * emojis.length)]}`);
+                    }
+                    return `<p class="mb-2">${formattedLine}</p>`;
+                }
+                return '';
+            }).join('');
+
+            if (quizPart) {
+                try {
+                    const cleanedQuizPart = quizPart.replace(/```json\n|```/g, '').trim();
+                    quizData = JSON.parse(cleanedQuizPart);
+                    quizQuestionsContainer.innerHTML = '';
+                    quizData.forEach((q, index) => {
+                        const questionDiv = document.createElement('div');
+                        questionDiv.className = 'mb-4 p-4 rounded-lg bg-gray-100 shadow';
+                        questionDiv.innerHTML = `
+                            <p class="font-bold mb-2">${index + 1}. ${q.question}</p>
+                            <div class="space-y-2">
+                                ${q.options.map((option, optIndex) => `
+                                    <div class="question-option p-3 rounded-md flex items-center" data-question-index="${index}" data-option-index="${optIndex}">
+                                        <input type="radio" name="question-${index}" id="q${index}-o${optIndex}" value="${option}" class="mr-2 hidden">
+                                        <label for="q${index}-o${optIndex}" class="cursor-pointer w-full text-left">${option}</label>
+                                    </div>
+                                `).join('')}
+                            </div>
+                            <div class="mt-2 text-sm font-semibold hidden" id="feedback-${index}"></div>
+                        `;
+                        quizQuestionsContainer.appendChild(questionDiv);
+                    });
+                    tabButtons['quiz'].disabled = false;
+                } catch (e) {
+                    console.error("Failed to parse quiz JSON:", e);
+                    tabButtons['quiz'].disabled = true;
+                }
+            } else {
+                tabButtons['quiz'].disabled = true;
+            }
+            return formattedLesson;
+        }
+
+        // --- Event Listeners ---
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('generate-button').addEventListener('click', async () => {
+                const prompt = document.getElementById('prompt-input').value.trim() || "The solar system";
+                const topic = document.getElementById('topic-select').value;
+                const style = document.getElementById('style-select').value;
+                const chapters = document.getElementById('chapters-select').value;
+                const ageGroup = document.getElementById('age-select').value;
+
+                generatedLessonText = '';
+                quizData = null;
+                currentLessonTitle = prompt;
+                audioButton.disabled = true;
+                downloadButton.disabled = true;
+                translateButton.disabled = true;
+                tabButtons['lesson'].disabled = true;
+                tabButtons['quiz'].disabled = true;
+                generatedLessonContent.innerHTML = '';
+                translatedLessonContent.innerHTML = '';
+                translatedLessonContent.classList.add('hidden');
+                quizQuestionsContainer.innerHTML = '';
+                quizResults.classList.add('hidden');
+                lessonLoadingIndicator.style.display = 'block';
+
+                try {
+                    const apiUrl = `${baseApiUrl}/api/generate-lesson`;
+                    const result = await fetchDataWithBackoff(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ prompt, topic, style, chapters, ageGroup })
+                    });
+
+                    if (result.candidates?.[0]?.content?.parts?.[0]?.text) {
+                        const rawText = result.candidates[0].content.parts[0].text;
+                        generatedLessonText = rawText;
+                        generatedLessonContent.innerHTML = formatLessonContent(rawText);
+                        audioButton.disabled = false;
+                        downloadButton.disabled = false;
+                        translateButton.disabled = false;
+                        tabButtons['lesson'].disabled = false;
+                        if (quizData) {
+                            tabButtons['quiz'].disabled = false;
+                        }
+                        switchTab('lesson');
+                    } else {
+                        generatedLessonContent.textContent = 'Sorry, I could not generate a lesson. Please try a different prompt.';
+                    }
+                } catch (error) {
+                    console.error("Lesson generation error:", error);
+                    generatedLessonContent.textContent = 'An error occurred while generating the lesson. Please try again.';
+                } finally {
+                    lessonLoadingIndicator.style.display = 'none';
+                }
+            });
+
+            document.getElementById('translate-button').addEventListener('click', async () => {
+                if (!generatedLessonText) return;
+
+                translationLoadingIndicator.style.display = 'block';
+                translatedLessonContent.classList.add('hidden');
+                translateButton.disabled = true;
+
+                try {
+                    const textToTranslate = generatedLessonContent.textContent;
+                    const targetLanguage = document.getElementById('target-language-select').value;
+
+                    const apiUrl = `${baseApiUrl}/api/translate-lesson`;
+
+                    const result = await fetchDataWithBackoff(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ text: textToTranslate, targetLanguage })
+                    });
+
+                    if (result.candidates?.[0]?.content?.parts?.[0]?.text) {
+                        const translatedText = result.candidates[0].content.parts[0].text;
+                        translatedLessonContent.innerHTML = `<h2 class="text-2xl sm:text-3xl font-bold text-center mb-4 text-[var(--primary-color)] leading-tight">Translated Lesson:</h2>` + formatLessonContent(translatedText);
+                        translatedLessonContent.classList.remove('hidden');
+                    } else {
+                        translatedLessonContent.textContent = 'Sorry, translation failed.';
+                        translatedLessonContent.classList.remove('hidden');
+                    }
+                } catch (error) {
+                    console.error("Translation error:", error);
+                    translatedLessonContent.textContent = 'An error occurred while translating. Please try again.';
+                    translatedLessonContent.classList.remove('hidden');
+                } finally {
+                    translationLoadingIndicator.style.display = 'none';
+                    translateButton.disabled = false;
+                }
+            });
+
+            document.getElementById('submit-quiz-button').addEventListener('click', async () => {
+                if (!quizData) return;
+
+                let score = 0;
+                let totalQuestions = quizData.length;
+
+                quizData.forEach((q, index) => {
+                    const selectedOptionElement = document.querySelector(`input[name="question-${index}"]:checked`);
+                    const feedbackElement = document.getElementById(`feedback-${index}`);
+                    const questionOptions = document.querySelectorAll(`[data-question-index="${index}"]`);
+
+                    questionOptions.forEach(option => {
+                        option.classList.remove('correct-answer', 'incorrect-answer');
+                        const optionInput = option.querySelector('input');
+                        if (optionInput.value === q.answer) {
+                            option.classList.add('correct-answer');
+                        }
+                    });
+
+                    if (selectedOptionElement) {
+                        if (selectedOptionElement.value === q.answer) {
+                            score++;
+                            feedbackElement.textContent = 'Correct!';
+                            feedbackElement.className = 'mt-2 text-sm font-semibold text-green-600';
+                        } else {
+                            feedbackElement.textContent = `Incorrect. The correct answer was: ${q.answer}`;
+                            feedbackElement.className = 'mt-2 text-sm font-semibold text-red-600';
+                        }
+                    } else {
+                        feedbackElement.textContent = 'You did not select an answer.';
+                        feedbackElement.className = 'mt-2 text-sm font-semibold text-gray-600';
+                    }
+                    feedbackElement.classList.remove('hidden');
+                });
+
+                quizResults.textContent = `You scored ${score} out of ${totalQuestions}!`;
+                quizResults.classList.remove('hidden');
+            });
+
+            document.getElementById('audio-button').addEventListener('click', async () => {
+                if (!generatedLessonText) return;
+
+                document.getElementById('audio-player-container').classList.remove('hidden');
+                document.getElementById('audio-loading-indicator').style.display = 'block';
+                audioButton.disabled = true;
+                downloadButton.disabled = true;
+                audioPlayer.pause();
+                audioPlayer.removeAttribute('src');
+
+                try {
+                    const languageCode = document.getElementById('voice-select').value;
+                    const voiceName = voiceLanguageMap[languageCode];
+
+                    if (!voiceName) {
+                        throw new Error('Invalid language code selected.');
+                    }
+
+                    const lessonContentForAudio = generatedLessonText.split('---')[0].trim();
+
+                    const apiUrl = `${baseApiUrl}/api/generate-audio`;
+
+                    const response = await fetchDataWithBackoff(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ text: lessonContentForAudio, voiceName: voiceName })
+                    });
+
+                    const audioData = response?.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
+                    const mimeType = response?.candidates?.[0]?.content?.parts?.[0]?.inlineData?.mimeType;
+
+                    if (audioData && mimeType && mimeType.startsWith("audio/")) {
+                        const sampleRateMatch = mimeType.match(/rate=(\d+)/);
+                        if (!sampleRateMatch) {
+                            throw new Error('Could not determine sample rate from MIME type.');
+                        }
+                        const sampleRate = parseInt(sampleRateMatch[1], 10);
+                        const pcmData = base64ToArrayBuffer(audioData);
+                        const pcm16 = new Int16Array(pcmData);
+                        const wavBlob = pcmToWav(pcm16, sampleRate);
+                        const audioUrl = URL.createObjectURL(wavBlob);
+
+                        audioPlayer.src = audioUrl;
+                        audioPlayer.play();
+                    } else {
+                        throw new Error('Invalid audio data received from server.');
+                    }
+                } catch (error) {
+                    console.error('Audio generation error:', error);
+                } finally {
+                    audioLoadingIndicator.style.display = 'none';
+                    audioButton.disabled = false;
+                    downloadButton.disabled = false;
+                }
+            });
+
+            document.getElementById('download-button').addEventListener('click', () => {
+                if (!generatedLessonText) return;
+
+                const [lessonContent] = generatedLessonText.split('---');
+                const blob = new Blob([lessonContent], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `${currentLessonTitle || 'lesson'}.txt`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            });
+
+            document.getElementById('tab-generate').addEventListener('click', () => switchTab('generate'));
+            document.getElementById('tab-lesson').addEventListener('click', () => switchTab('lesson'));
+            document.getElementById('tab-quiz').addEventListener('click', () => {
+                if (!tabButtons['quiz'].disabled) {
+                    switchTab('quiz');
+                }
+            });
+
+            document.getElementById('color-palette-select').addEventListener('change', (e) => {
+                const palettes = ['palette-1', 'palette-2', 'palette-3', 'palette-4', 'palette-5', 'palette-6'];
+                const selectedPaletteId = e.target.value;
+                document.body.className = `antialiased text-gray-800 ${palettes[selectedPaletteId - 1]}`;
+            });
+
+            // Add click listener for quiz options to change background color
+            document.getElementById('quiz-questions-container').addEventListener('click', (e) => {
+                const optionDiv = e.target.closest('.question-option');
+                if (optionDiv) {
+                    const questionIndex = optionDiv.dataset.questionIndex;
+                    const questionOptions = document.querySelectorAll(`[data-question-index="${questionIndex}"]`);
+                    questionOptions.forEach(opt => opt.classList.remove('selected'));
+                    optionDiv.classList.add('selected');
+                }
+            });
+
+            switchTab('generate');
+        });
+    </script>
+</body>
+
+</html>
