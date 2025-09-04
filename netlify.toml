@@ -1,6 +1,5 @@
-# netlify.toml
 [build]
-  publish = "public"          # if you have a static site; otherwise omit
+  publish = "public"
   functions = "netlify/functions"
 
 [[redirects]]
